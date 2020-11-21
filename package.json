@@ -1,0 +1,47 @@
+{
+  "name": "react-json-collapse",
+  "version": "1.0.0",
+  "description": "A React component to navigate a given JSON input using a collapsible UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 3000",
+    "build-storybook": "build-storybook"
+  },
+  "keywords": [
+    "react",
+    "collapse",
+    "collapsible",
+    "json"
+  ],
+  "author": "J. Paterson",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.12.7",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "@storybook/addon-actions": "^6.1.2",
+    "@storybook/addon-essentials": "^6.1.2",
+    "@storybook/addon-links": "^6.1.2",
+    "@storybook/react": "^6.1.2",
+    "@types/jest": "24.0.15",
+    "@types/ramda": "^0.27.32",
+    "@types/react": "^16.8.17",
+    "@types/styled-components": "^5.1.4",
+    "@types/styled-system": "^5.1.10",
+    "babel-loader": "^8.2.1",
+    "typescript": "3.5.2"
+  },
+  "dependencies": {
+    "@primer/octicons-react": "^11.1.0",
+    "@primer/styled-octicons": "^11.1.0",
+    "ramda": "^0.27.1",
+    "react": "^16.8.6",
+    "react-dom": "^17.0.1",
+    "react-icons": "^3.11.0",
+    "react-uuid": "^1.0.2",
+    "styled-components": "^5.2.1",
+    "styled-system": "^5.1.5"
+  }
+}
