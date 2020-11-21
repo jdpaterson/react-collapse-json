@@ -18,7 +18,7 @@ const json = {
     ]
   }
 }
-export const Primary = () => <RecursiveCollapse contentType={json} />
+export const Primary = () => <RecursiveCollapse json={json} />
 
 export default {
   title: 'Components/Button',
