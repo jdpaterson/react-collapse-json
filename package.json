@@ -1,5 +1,5 @@
 {
-  "name": "react-json-collapse",
+  "name": "react-collapse-json",
   "version": "1.0.0",
   "description": "A React component to navigate a given JSON input using a collapsible UI",
   "main": "index.js",
