@@ -1,5 +1,5 @@
 import React from 'react'
-import { CollapseObject } from '../components'
+import CollapseObject from '~/components/CollapseObject'
 
 const object = {
   testStr: "str",

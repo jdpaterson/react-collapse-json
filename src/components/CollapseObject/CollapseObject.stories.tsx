@@ -1,8 +1,8 @@
 import React from 'react'
 import { Meta } from '@storybook/react/types-6-0';
-import RecursiveCollapse from './index'
+import RecursiveCollapse from '~/components/CollapseObject'
 
-const json = {
+const object = {
   testStr: "str",
   testArray: [
     {
@@ -18,7 +18,7 @@ const json = {
     ]
   }
 }
-export const Primary = () => <RecursiveCollapse json={json} />
+export const Primary = () => <RecursiveCollapse object={object} />
 
 export default {
   title: 'Components/Button',
