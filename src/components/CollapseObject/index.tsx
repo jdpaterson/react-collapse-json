@@ -1,76 +1,67 @@
 import React from 'react'
 import uuid from 'react-uuid'
-import { Box, Paragraph } from '../Base'
-import Collapse from '../Collapse'
+import { ICollapseObject } from '~/types'
+import { Box } from '~/components/Base'
+import {
+  defaultCollapser,
+  defaultOnBoolean,
+  defaultOnString,
+  defaultOnNumber,
+  defaultOnUndefined
+} from './defaults'
 
-interface ICollapseObject {
-  json: Record<string, unknown>
-}
 const CollapseObject: React.FunctionComponent<ICollapseObject> = ({
-  json,
+  collapser = defaultCollapser,
+  object,
+  onBoolean = defaultOnBoolean,
+  onNumber = defaultOnNumber,
+  onString = defaultOnString,
+  onUndefined = defaultOnUndefined,
+  rootKey = 'Root'
 }):JSX.Element => {
-  const collapseArray = (key:string, arr: Array<unknown>) =>
+
+  const collapseArray = (key:string, arr: Array<unknown>):JSX.Element[] =>
     arr.map(
       (arrItem, index) => (
-        <Collapse
-          key={uuid()}
-          title={`${key}[${index}]`}
-        >
-          { parseVal(`${key}[${index}]`, arrItem) }
-        </Collapse>
+        <React.Fragment key={uuid()}>
+          { collapser(`${key}[${index}]`, arrItem, parseVal) }
+        </React.Fragment>
       )
     )
 
-  const collapseObject = (_key:string, obj: Record<string, unknown>) =>
+  const collapseObject = (_key:string, obj: Record<string, unknown>):JSX.Element[] =>
     Object.entries(obj).map(
       ([key, value]) => (
-        <Collapse
-          key={uuid()}
-          title={key}
-        >
-          { parseVal(key, value) }
-        </Collapse>
+        <React.Fragment key={uuid()}>
+          { collapser(key, value, parseVal) }
+        </React.Fragment>
       )
     )
 
-  const parseVal = (key: string, val: any) => {
-    switch (typeof(val)) {
+  const parseVal = (key: string, value: any):JSX.Element | JSX.Element[] => {
+    switch (typeof(value)) {
+      case 'boolean':
+        return onBoolean(key, value)
       case 'object':
-        if(Array.isArray(val)) {
-          return collapseArray(key, val)
+        if(Array.isArray(value)) {
+          return collapseArray(key, value)
         } else {
-          return collapseObject(key, val)
+          return collapseObject(key, value)
         }
       case 'string':
+        return onString(key, value)
       case 'number':
-        return (
-          <Box ml={5}>
-            <Paragraph>{val}</Paragraph>
-          </Box>
-        )
+        return onNumber(key, value)
       default:
-        console.log("typeof not found: ", typeof(val), key, val)
-        return (
-          <Box ml={5}>
-            <Paragraph>{val.toString()}</Paragraph>
-          </Box>
-        )
+        console.log("typeof not found: ", typeof(value), key, value)
+        return onUndefined(key, value)
     }
   }
 
   return (
     <Box display="flex" flexDirection="column">
       {
-        Object.entries(json).map(([key, value]) => {
-          return (
-            <Collapse
-              key={uuid()}
-              title={key}
-            >
-              { parseVal(key, value) }
-            </Collapse>
-          )
-        })
+        collapseObject(rootKey, object)
       }
     </Box>
   )
