@@ -2,14 +2,14 @@
 
 ## Installation
 
-`npm install react-collapse-json`
+`npm install react-collapse-object`
 
 ## Use
 
 ```javascript
-import { CollapseJson } from 'react-collapse-json'
+import { CollapseObject } from 'react-collapse-object'
 
-const someRandomJson = {
+const someRandomObject = {
   value: "VALUE",
   sys: {
     id: 123,
@@ -28,7 +28,7 @@ const someRandomJson = {
 }
 
 const Component = () => (
-  <CollapseJson json={someRandomJson} />
+  <CollapseObject object={someRandomObject} />
 )
 
 ```
