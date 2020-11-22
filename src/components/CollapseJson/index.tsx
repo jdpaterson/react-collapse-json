@@ -3,10 +3,10 @@ import uuid from 'react-uuid'
 import { Box, Paragraph } from '../Base'
 import Collapse from '../Collapse'
 
-interface IRecursiveCollapse {
+interface ICollapseJson {
   json: Record<string, unknown>
 }
-const RecursiveCollapse: React.FunctionComponent<IRecursiveCollapse> = ({
+const CollapseJson: React.FunctionComponent<ICollapseJson> = ({
   json,
 }):JSX.Element => {
   const collapseArray = (key:string, arr: Array<unknown>) =>
@@ -21,7 +21,7 @@ const RecursiveCollapse: React.FunctionComponent<IRecursiveCollapse> = ({
       )
     )
 
-  const collapseObject = (key:string, obj: Record<string, unknown>) =>
+  const collapseObject = (_key:string, obj: Record<string, unknown>) =>
     Object.entries(obj).map(
       ([key, value]) => (
         <Collapse
@@ -33,7 +33,6 @@ const RecursiveCollapse: React.FunctionComponent<IRecursiveCollapse> = ({
       )
     )
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const parseVal = (key: string, val: any) => {
     switch (typeof(val)) {
       case 'object':
@@ -77,4 +76,4 @@ const RecursiveCollapse: React.FunctionComponent<IRecursiveCollapse> = ({
   )
 }
 
-export default RecursiveCollapse
+export default CollapseJson

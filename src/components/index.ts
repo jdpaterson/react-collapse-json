@@ -1,5 +1,5 @@
-import RecursiveCollapse from './RecursiveCollapse'
+import CollapseJson from './CollapseJson'
 
 export {
-  RecursiveCollapse
+  CollapseJson
 }

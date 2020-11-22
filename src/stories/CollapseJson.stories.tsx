@@ -1,5 +1,5 @@
 import React from 'react'
-import { RecursiveCollapse } from '../components'
+import { CollapseJson } from '../components'
 
 const json = {
   testStr: "str",
@@ -17,4 +17,4 @@ const json = {
     ]
   }
 }
-export const Primary = () => <RecursiveCollapse json={json} />
+export const Primary = () => <CollapseJson json={json} />
