@@ -1,5 +1,5 @@
-import CollapseJson from './CollapseJson'
+import CollapseObject from './CollapseObject'
 
 export {
-  CollapseJson
+  CollapseObject
 }

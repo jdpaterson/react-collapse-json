@@ -1,7 +1,7 @@
 import React from 'react'
-import { CollapseJson } from '../components'
+import { CollapseObject } from '../components'
 
-const json = {
+const object = {
   testStr: "str",
   testArray: [
     {
@@ -17,4 +17,4 @@ const json = {
     ]
   }
 }
-export const Primary = () => <CollapseJson json={json} />
+export const Primary = () => <CollapseObject object={object} />

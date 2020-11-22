@@ -3,10 +3,10 @@ import uuid from 'react-uuid'
 import { Box, Paragraph } from '../Base'
 import Collapse from '../Collapse'
 
-interface ICollapseJson {
+interface ICollapseObject {
   json: Record<string, unknown>
 }
-const CollapseJson: React.FunctionComponent<ICollapseJson> = ({
+const CollapseObject: React.FunctionComponent<ICollapseObject> = ({
   json,
 }):JSX.Element => {
   const collapseArray = (key:string, arr: Array<unknown>) =>
@@ -76,4 +76,4 @@ const CollapseJson: React.FunctionComponent<ICollapseJson> = ({
   )
 }
 
-export default CollapseJson
+export default CollapseObject
