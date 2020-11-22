@@ -1,11 +1,12 @@
-# Installation
+# React Collapse Object
+
+## Installation
 
 `npm install react-collapse-json`
 
-# Use
+## Use
 
-```
-
+```javascript
 import { CollapseJson } from 'react-collapse-json'
 
 const someRandomJson = {
