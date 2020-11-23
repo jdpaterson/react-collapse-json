@@ -1,15 +1,16 @@
 import React from 'react'
 import uuid from 'react-uuid'
-import { TCollapseObject, TCollapseObjectProps } from '~/types'
+import { TCollapseObject } from '~/types'
 import Collapse from '../Collapse'
 import {
+  defaultCollapser,
   defaultOnBoolean,
   defaultOnString,
   defaultOnNumber,
   defaultOnUndefined
 } from './defaults'
 
-const CollapseObject: React.FunctionComponent<TCollapseObjectProps> = (props) => {
+const CollapseObject: React.FunctionComponent<TCollapseObject> = (props) => {
   const collapseArray = (props: TCollapseObject):JSX.Element => (
     <Collapse title={String(props.valueKey)} >
       {
@@ -20,7 +21,7 @@ const CollapseObject: React.FunctionComponent<TCollapseObjectProps> = (props) =>
               { ...props }
               value={arrItem}
               valueKey={index}
-              path={[...props.path, index]}
+              path={[...(props.path || []), index]}
             />
           )
         )
@@ -38,7 +39,7 @@ const CollapseObject: React.FunctionComponent<TCollapseObjectProps> = (props) =>
               { ...props }
               value={value}
               valueKey={key}
-              path={[...props.path, String(props.valueKey)]}
+              path={[...(props.path || []), String(props.valueKey)]}
             />
           )
         )
@@ -46,7 +47,7 @@ const CollapseObject: React.FunctionComponent<TCollapseObjectProps> = (props) =>
     </Collapse>
   )
 
-  const defaultParseCollapse = (props: TCollapseObject):JSX.Element | JSX.Element[] => {
+  const parseCollapse = (props: TCollapseObject):JSX.Element | JSX.Element[] | undefined => {
     const {
       onBoolean,
       onNumber,
@@ -56,7 +57,7 @@ const CollapseObject: React.FunctionComponent<TCollapseObjectProps> = (props) =>
     } = props
     switch (typeof(value)) {
       case 'boolean':
-        return onBoolean(props)
+        return onBoolean && onBoolean(props)
       case 'object':
         if(Array.isArray(value)) {
           return collapseArray(props)
@@ -64,42 +65,32 @@ const CollapseObject: React.FunctionComponent<TCollapseObjectProps> = (props) =>
           return collapseObject(props)
         }
       case 'string':
-        return onString(props)
+        return onString && onString(props)
       case 'number':
-        return onNumber(props)
+        return onNumber && onNumber(props)
       default:
         console.log("typeof not found: ", props)
-        return onUndefined(props)
+        return onUndefined && onUndefined(props)
     }
   }
-
-  const {
-    onBoolean = defaultOnBoolean,
-    onNumber = defaultOnNumber,
-    onString = defaultOnString,
-    onUndefined = defaultOnUndefined,
-    parseCollapse = defaultParseCollapse,
-    path = [],
-    value,
-    valueKey = 'Root'
-  } = props
 
   return (
     <>
       {
-        parseCollapse({
-          onBoolean: onBoolean,
-          onNumber: onNumber,
-          onString: onString,
-          onUndefined: onUndefined,
-          parseCollapse: parseCollapse,
-          path: path,
-          value: value,
-          valueKey: valueKey
-        })
+        parseCollapse(props)
       }
     </>
   )
+}
+
+CollapseObject.defaultProps = {
+  collapser: defaultCollapser,
+  onBoolean: defaultOnBoolean,
+  onNumber: defaultOnNumber,
+  onString: defaultOnString,
+  onUndefined: defaultOnUndefined,
+  path: [],
+  valueKey: 'Root'
 }
 
 export default CollapseObject

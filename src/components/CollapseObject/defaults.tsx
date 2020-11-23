@@ -7,7 +7,7 @@ export const defaultCollapser = (props:TCollapseObject):JSX.Element => (
   <LocalCollapse
     title={String(props.valueKey)}
   >
-    { props.parseCollapse(props) }
+    { props.parseCollapse && props.parseCollapse(props) }
   </LocalCollapse>
 )
 
@@ -18,7 +18,7 @@ export const defaultOnBoolean = ({
 }:TCollapseObject):JSX.Element => (
   <Box
     ml={3}
-    onClick={() => console.log([...path, valueKey])}
+    onClick={() => console.log([...(path || []), valueKey])}
   >
     <Paragraph>{valueKey}: {String(value)}</Paragraph>
   </Box>
@@ -31,7 +31,7 @@ export const defaultOnString = ({
 }:TCollapseObject):JSX.Element => (
   <Box
     ml={3}
-    onClick={() => console.log([...path, valueKey])}
+    onClick={() => console.log([...(path || []), valueKey])}
   >
     <Paragraph>{valueKey}: {String(value)}</Paragraph>
   </Box>
@@ -44,7 +44,7 @@ export const defaultOnNumber = ({
 }:TCollapseObject):JSX.Element => (
   <Box
     ml={3}
-    onClick={() => console.log([...path, valueKey])}
+    onClick={() => console.log([...(path || []), valueKey])}
   >
     <Paragraph>{valueKey}: {value}</Paragraph>
   </Box>
@@ -57,7 +57,7 @@ export const defaultOnUndefined = ({
 }:TCollapseObject):JSX.Element => (
   <Box
     ml={3}
-    onClick={() => console.log([...path, valueKey])}
+    onClick={() => console.log([...(path || []), valueKey])}
   >
     <Paragraph>{valueKey}: {String(value)}</Paragraph>
   </Box>

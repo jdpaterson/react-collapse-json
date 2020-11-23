@@ -17,4 +17,4 @@ const object = {
     ]
   }
 }
-export const Primary = () => <CollapseObject object={object} />
+export const Primary = () => <CollapseObject value={object} />
