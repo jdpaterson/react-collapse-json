@@ -1,6 +1,6 @@
 {
   "name": "react-collapse-object",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React component to navigate a given javascript object input using a collapsible UI",
   "main": "dist/index.ts",
   "scripts": {
