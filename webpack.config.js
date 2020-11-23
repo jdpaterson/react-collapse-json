@@ -5,7 +5,9 @@ module.exports = {
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    library: 'react-collapse-object',
+    libraryTarget: 'umd'
   },
   devtool: 'source-map',
   // optimization: {
@@ -16,7 +18,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: [/node_modules/],
+        exclude: [/node_modules/, /.storybook/, /.vscode/, /src\/\**\/\*.stories.tsx/],
       },
     ],
   },
@@ -26,4 +28,12 @@ module.exports = {
     },
     extensions: [ '.tsx', '.ts', '.js' ],
   },
+  externals: {
+    react: {
+      commonjs: 'react',
+      commonjs2: 'react',
+      amd: 'react',
+      root: '_',
+    },
+  }
 }
