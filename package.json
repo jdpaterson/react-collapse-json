@@ -2,7 +2,7 @@
   "name": "react-collapse-object",
   "version": "1.0.2",
   "description": "A React component to navigate a given javascript object input using a collapsible UI",
-  "main": "index.js",
+  "main": "dist/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 3000",
@@ -31,7 +31,9 @@
     "@types/styled-components": "^5.1.4",
     "@types/styled-system": "^5.1.10",
     "babel-loader": "^8.2.1",
-    "typescript": "3.5.2"
+    "ts-loader": "^8.0.11",
+    "typescript": "4.1.2",
+    "webpack": "^4.41.6"
   },
   "dependencies": {
     "@primer/octicons-react": "^11.1.0",
