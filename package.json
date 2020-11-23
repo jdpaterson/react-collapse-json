@@ -2,7 +2,7 @@
   "name": "react-collapse-object",
   "version": "1.0.3",
   "description": "A React component to navigate a given javascript object input using a collapsible UI",
-  "main": "dist/index.ts",
+  "main": "dist/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 3000",
