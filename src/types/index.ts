@@ -1,11 +1,23 @@
-export type TParseCollapse = (objKey: string, objValue: unknown) => JSX.Element | JSX.Element[]
-export type TFinalValue = (key: string, value: string | number | boolean) => JSX.Element
-export interface ICollapseObject {
+export type TParseCollapse = (props: TCollapseObjectProps) => JSX.Element | JSX.Element[]
+export type TCollapseObject = {
+  collapser: TParseCollapse,
+  onBoolean: TParseCollapse,
+  onNumber: TParseCollapse,
+  onString: TParseCollapse,
+  onUndefined: TParseCollapse,
+  parseCollapse: TParseCollapse
+  path: Array<string | number>,
+  value: any,
+  valueKey?: string
+}
+export type TCollapseObjectProps = {
   collapser?: TParseCollapse,
-  object: Record<string, unknown>,
-  onBoolean?: TFinalValue,
-  onNumber?: TFinalValue,
-  onString?: TFinalValue,
-  onUndefined?: TFinalValue,
-  rootKey?: string
+  onBoolean?: TParseCollapse,
+  onNumber?: TParseCollapse,
+  onString?: TParseCollapse,
+  onUndefined?: TParseCollapse,
+  parseCollapse?: TParseCollapse
+  path?: Array<string | number>,
+  value: any,
+  valueKey?: string | number
 }

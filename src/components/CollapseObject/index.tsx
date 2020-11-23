@@ -1,69 +1,104 @@
 import React from 'react'
 import uuid from 'react-uuid'
-import { ICollapseObject } from '~/types'
-import { Box } from '~/components/Base'
+import { TCollapseObject, TCollapseObjectProps } from '~/types'
+import Collapse from '../Collapse'
 import {
-  defaultCollapser,
   defaultOnBoolean,
   defaultOnString,
   defaultOnNumber,
   defaultOnUndefined
 } from './defaults'
 
-const CollapseObject: React.FunctionComponent<ICollapseObject> = ({
-  collapser = defaultCollapser,
-  object,
-  onBoolean = defaultOnBoolean,
-  onNumber = defaultOnNumber,
-  onString = defaultOnString,
-  onUndefined = defaultOnUndefined,
-  rootKey = 'Root'
-}):JSX.Element => {
+const CollapseObject: React.FunctionComponent<TCollapseObjectProps> = (props) => {
+  const collapseArray = (props: TCollapseObject):JSX.Element => (
+    <Collapse title={String(props.valueKey)} >
+      {
+        props.value.map(
+          (arrItem:unknown, index:number) => (
+            <CollapseObject
+              key={uuid()}
+              { ...props }
+              value={arrItem}
+              valueKey={index}
+              path={[...props.path, index]}
+            />
+          )
+        )
+      }
+    </Collapse>
+  )
 
-  const collapseArray = (key:string, arr: Array<unknown>):JSX.Element[] =>
-    arr.map(
-      (arrItem, index) => (
-        <React.Fragment key={uuid()}>
-          { collapser(`${key}[${index}]`, arrItem, parseVal) }
-        </React.Fragment>
-      )
-    )
+  const collapseObject = (props: TCollapseObject):JSX.Element => (
+    <Collapse title={`${props.valueKey}: {${Object.keys(props.value).join(', ')}}`} >
+      {
+        Object.entries(props.value).map(
+          ([key, value]) => (
+            <CollapseObject
+              key={uuid()}
+              { ...props }
+              value={value}
+              valueKey={key}
+              path={[...props.path, String(props.valueKey)]}
+            />
+          )
+        )
+      }
+    </Collapse>
+  )
 
-  const collapseObject = (_key:string, obj: Record<string, unknown>):JSX.Element[] =>
-    Object.entries(obj).map(
-      ([key, value]) => (
-        <React.Fragment key={uuid()}>
-          { collapser(key, value, parseVal) }
-        </React.Fragment>
-      )
-    )
-
-  const parseVal = (key: string, value: any):JSX.Element | JSX.Element[] => {
+  const defaultParseCollapse = (props: TCollapseObject):JSX.Element | JSX.Element[] => {
+    const {
+      onBoolean,
+      onNumber,
+      onString,
+      onUndefined,
+      value,
+    } = props
     switch (typeof(value)) {
       case 'boolean':
-        return onBoolean(key, value)
+        return onBoolean(props)
       case 'object':
         if(Array.isArray(value)) {
-          return collapseArray(key, value)
+          return collapseArray(props)
         } else {
-          return collapseObject(key, value)
+          return collapseObject(props)
         }
       case 'string':
-        return onString(key, value)
+        return onString(props)
       case 'number':
-        return onNumber(key, value)
+        return onNumber(props)
       default:
-        console.log("typeof not found: ", typeof(value), key, value)
-        return onUndefined(key, value)
+        console.log("typeof not found: ", props)
+        return onUndefined(props)
     }
   }
 
+  const {
+    onBoolean = defaultOnBoolean,
+    onNumber = defaultOnNumber,
+    onString = defaultOnString,
+    onUndefined = defaultOnUndefined,
+    parseCollapse = defaultParseCollapse,
+    path = [],
+    value,
+    valueKey = 'Root'
+  } = props
+
   return (
-    <Box display="flex" flexDirection="column">
+    <>
       {
-        collapseObject(rootKey, object)
+        parseCollapse({
+          onBoolean: onBoolean,
+          onNumber: onNumber,
+          onString: onString,
+          onUndefined: onUndefined,
+          parseCollapse: parseCollapse,
+          path: path,
+          value: value,
+          valueKey: valueKey
+        })
       }
-    </Box>
+    </>
   )
 }
 

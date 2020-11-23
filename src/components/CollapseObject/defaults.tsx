@@ -1,36 +1,64 @@
 import React from 'react'
-import { TParseCollapse } from '~/types'
+import { TCollapseObject } from '~/types'
 import { Box, Paragraph } from '~/components/Base'
 import LocalCollapse from '~/components/Collapse'
 
-export const defaultCollapser = (objKey: string, objVal: any, parseCollapse: TParseCollapse) => (
+export const defaultCollapser = (props:TCollapseObject):JSX.Element => (
   <LocalCollapse
-    title={objKey}
+    title={String(props.valueKey)}
   >
-    { parseCollapse(objKey, objVal) }
+    { props.parseCollapse(props) }
   </LocalCollapse>
 )
 
-export const defaultOnBoolean = (_key:string, value:boolean):JSX.Element => (
-  <Box ml={5}>
-    <Paragraph>{String(value)}</Paragraph>
+export const defaultOnBoolean = ({
+  value,
+  valueKey,
+  path
+}:TCollapseObject):JSX.Element => (
+  <Box
+    ml={3}
+    onClick={() => console.log([...path, valueKey])}
+  >
+    <Paragraph>{valueKey}: {String(value)}</Paragraph>
   </Box>
 )
 
-export const defaultOnString = (_key:string, value:string):JSX.Element => (
-  <Box ml={5}>
-    <Paragraph>{String(value)}</Paragraph>
+export const defaultOnString = ({
+  value,
+  valueKey,
+  path
+}:TCollapseObject):JSX.Element => (
+  <Box
+    ml={3}
+    onClick={() => console.log([...path, valueKey])}
+  >
+    <Paragraph>{valueKey}: {String(value)}</Paragraph>
   </Box>
 )
 
-export const defaultOnNumber = (_key:string, value:number):JSX.Element => (
-  <Box ml={5}>
-    <Paragraph>{value}</Paragraph>
+export const defaultOnNumber = ({
+  value,
+  valueKey,
+  path
+}:TCollapseObject):JSX.Element => (
+  <Box
+    ml={3}
+    onClick={() => console.log([...path, valueKey])}
+  >
+    <Paragraph>{valueKey}: {value}</Paragraph>
   </Box>
 )
 
-export const defaultOnUndefined = (_key:string, value:number):JSX.Element => (
-  <Box ml={5}>
-    <Paragraph>{String(value)}</Paragraph>
+export const defaultOnUndefined = ({
+  value,
+  valueKey,
+  path
+}:TCollapseObject):JSX.Element => (
+  <Box
+    ml={3}
+    onClick={() => console.log([...path, valueKey])}
+  >
+    <Paragraph>{valueKey}: {String(value)}</Paragraph>
   </Box>
 )

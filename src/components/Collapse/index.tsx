@@ -11,29 +11,35 @@ const Collapse: React.FunctionComponent<ICollapse> = ({
 }):JSX.Element => {
   const [collapsed, setCollapsed] = useState(false)
   return (
-    <Box display="flex" flexDirection="column" ml={5}>
     <Box
-      alignItems="center"
+      data-test-id="collapseContainer"
       display="flex"
+      flexDirection="column"
       justifyContent="flex-start"
-      onClick={(e) => {
-        e.preventDefault()
-        setCollapsed(!collapsed)
-      }}
+      ml={3}
     >
-      <Box>
-        <Paragraph>{title}</Paragraph>
+      <Box
+        alignItems="center"
+        display="flex"
+        justifyContent="flex-start"
+        onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(!collapsed)
+        }}
+      >
+        <Box>
+          {
+            collapsed ? (
+              <ChevronDownIcon />
+            ) : (
+              <ChevronRightIcon />
+            )
+          }
+        </Box>
+        <Box ml={2}>
+          <Paragraph>{title}</Paragraph>
+        </Box>
       </Box>
-      <Box>
-        {
-          collapsed ? (
-            <ChevronDownIcon />
-          ) : (
-            <ChevronRightIcon />
-          )
-        }
-      </Box>
-    </Box>
       {
         collapsed && children
       }
