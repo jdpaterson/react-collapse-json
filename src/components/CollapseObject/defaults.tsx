@@ -1,64 +1,75 @@
 import React from 'react'
-import { TCollapseObject } from '~/types'
+import { TCollapseObjectParser } from '~/types'
 import { Box, Paragraph } from '~/components/Base'
-import LocalCollapse from '~/components/Collapse'
+import { CheckIcon, SquareIcon } from '@primer/styled-octicons'
 
-export const defaultCollapser = (props:TCollapseObject):JSX.Element => (
-  <LocalCollapse
-    title={String(props.valueKey)}
-  >
-    { props.parseCollapse && props.parseCollapse(props) }
-  </LocalCollapse>
-)
-
-export const defaultOnBoolean = ({
+export const defaultAsString = ({
   value,
   valueKey,
-  path
-}:TCollapseObject):JSX.Element => (
-  <Box
-    ml={3}
-    onClick={() => console.log([...(path || []), valueKey])}
-  >
-    <Paragraph>{valueKey}: {String(value)}</Paragraph>
-  </Box>
-)
+  path,
+  selectionState,
+  setSelectionState
+}:TCollapseObjectParser):JSX.Element => {
+  const newPath = [...path, valueKey]
+  const isSelected = selectionState[newPath.join('.')]
+  return (
+    <Box
+      display="flex"
+      ml={3}
+      onClick={() => {
+        setSelectionState({
+          ...selectionState,
+          [newPath.join('.')]: !isSelected
+        })
+        return selectionState
+      }}
+    >
+      {
+        isSelected ? (
+          <CheckIcon />
+        ) : (
+          <SquareIcon />
+        )
+      }
+      <Paragraph>{valueKey}: {String(value)}</Paragraph>
+    </Box>
+  )
+}
 
-export const defaultOnString = ({
+export const defaultAsIs = ({
   value,
   valueKey,
-  path
-}:TCollapseObject):JSX.Element => (
-  <Box
-    ml={3}
-    onClick={() => console.log([...(path || []), valueKey])}
-  >
-    <Paragraph>{valueKey}: {String(value)}</Paragraph>
-  </Box>
-)
+  path,
+  selectionState,
+  setSelectionState
+}:TCollapseObjectParser):JSX.Element => {
+  const newPath = [...path, valueKey]
+  const isSelected = selectionState[newPath.join('.')]
+  return (
+    <Box
+      display="flex"
+      ml={3}
+      onClick={() => {
+        setSelectionState({
+          ...selectionState,
+          [newPath.join('.')]: !isSelected
+        })
+        return selectionState
+      }}
+    >
+      {
+        isSelected ? (
+          <CheckIcon />
+        ) : (
+          <SquareIcon />
+        )
+      }
+      <Paragraph>{valueKey}: {value}</Paragraph>
+    </Box>
+  )
+}
 
-export const defaultOnNumber = ({
-  value,
-  valueKey,
-  path
-}:TCollapseObject):JSX.Element => (
-  <Box
-    ml={3}
-    onClick={() => console.log([...(path || []), valueKey])}
-  >
-    <Paragraph>{valueKey}: {value}</Paragraph>
-  </Box>
-)
-
-export const defaultOnUndefined = ({
-  value,
-  valueKey,
-  path
-}:TCollapseObject):JSX.Element => (
-  <Box
-    ml={3}
-    onClick={() => console.log([...(path || []), valueKey])}
-  >
-    <Paragraph>{valueKey}: {String(value)}</Paragraph>
-  </Box>
-)
+export const defaultOnNumber = defaultAsIs
+export const defaultOnBoolean = defaultAsString
+export const defaultOnString = defaultAsString
+export const defaultOnUndefined = defaultAsString

@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ChevronDownIcon, ChevronRightIcon } from '@primer/styled-octicons'
 import { Box, Paragraph } from '../Base'
 
 interface ICollapse {
+  isCollapsed: boolean,
+  onCollapse: () => void,
   title: string
 }
 const Collapse: React.FunctionComponent<ICollapse> = ({
   children,
+  isCollapsed,
+  onCollapse,
   title
 }):JSX.Element => {
-  const [collapsed, setCollapsed] = useState(false)
   return (
     <Box
       data-test-id="collapseContainer"
@@ -24,12 +27,12 @@ const Collapse: React.FunctionComponent<ICollapse> = ({
         justifyContent="flex-start"
         onClick={(e) => {
           e.preventDefault()
-          setCollapsed(!collapsed)
+          onCollapse()
         }}
       >
         <Box>
           {
-            collapsed ? (
+            isCollapsed ? (
               <ChevronDownIcon />
             ) : (
               <ChevronRightIcon />
@@ -41,7 +44,7 @@ const Collapse: React.FunctionComponent<ICollapse> = ({
         </Box>
       </Box>
       {
-        collapsed && children
+        isCollapsed && children
       }
     </Box>
   )
