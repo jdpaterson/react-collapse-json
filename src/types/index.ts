@@ -19,6 +19,7 @@ export type TCollapseObject = {
   onNumber?: React.FunctionComponent<TCollapseObjectParser>,
   onString?: React.FunctionComponent<TCollapseObjectParser>,
   onUndefined?: React.FunctionComponent<TCollapseObjectParser>,
+  onSubmit?: (selectionState: Record<string, Array<string>>) => void,
   value: any,
   valueKey?: ReactText
 }

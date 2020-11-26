@@ -10,11 +10,13 @@ export const defaultAsString = ({
   selectionState,
   setSelectionState
 }:TCollapseObjectParser):JSX.Element => {
-  const newPath = [...path, valueKey]
+  const newPath = [...path, valueKey].filter((isVal) => isVal || isVal === 0)
   const isSelected = selectionState[newPath.join('.')]
   return (
     <Box
+      alignItems="center"
       display="flex"
+      height={25}
       ml={3}
       onClick={() => {
         setSelectionState({
@@ -43,11 +45,13 @@ export const defaultAsIs = ({
   selectionState,
   setSelectionState
 }:TCollapseObjectParser):JSX.Element => {
-  const newPath = [...path, valueKey]
+  const newPath = [...path, valueKey].filter((isVal) => isVal || isVal === 0)
   const isSelected = selectionState[newPath.join('.')]
   return (
     <Box
+      alignItems="center"
       display="flex"
+      height={25}
       ml={3}
       onClick={() => {
         setSelectionState({
@@ -73,3 +77,5 @@ export const defaultOnNumber = defaultAsIs
 export const defaultOnBoolean = defaultAsString
 export const defaultOnString = defaultAsString
 export const defaultOnUndefined = defaultAsString
+
+export const defaultSubmit = (state:any) => console.log(state)

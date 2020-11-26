@@ -24,6 +24,7 @@ const Collapse: React.FunctionComponent<ICollapse> = ({
       <Box
         alignItems="center"
         display="flex"
+        height={25}
         justifyContent="flex-start"
         onClick={(e) => {
           e.preventDefault()

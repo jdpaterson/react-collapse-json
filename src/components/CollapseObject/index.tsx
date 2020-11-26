@@ -1,31 +1,41 @@
 import React, { useState } from 'react'
 import uuid from 'react-uuid'
 import { TCollapseObject, TCollapseObjectParser } from '~/types'
+import { Button } from '~/components/Base'
 import Collapse from '../Collapse'
 import {
   defaultOnBoolean,
   defaultOnString,
   defaultOnNumber,
-  defaultOnUndefined
+  defaultOnUndefined,
+  defaultSubmit
 } from './defaults'
 
 const CollapseObject: React.FunctionComponent<TCollapseObject> = (props) => {
   const [collapseState, setCollapseState] = useState({})
   const [selectionState, setSelectionState] = useState({})
   return (
-    <CollapseObjectParser
-      collapseState={collapseState}
-      setCollapseState={setCollapseState}
-      onBoolean={props.onBoolean || defaultOnBoolean}
-      onNumber={props.onNumber || defaultOnNumber}
-      onString={props.onString || defaultOnString}
-      onUndefined={props.onUndefined || defaultOnUndefined}
-      path={[]}
-      selectionState={selectionState}
-      setSelectionState={setSelectionState}
-      value={props.value}
-      valueKey={props.valueKey || "Root"}
-    />
+    <>
+      <CollapseObjectParser
+        collapseState={collapseState}
+        setCollapseState={setCollapseState}
+        onBoolean={props.onBoolean || defaultOnBoolean}
+        onNumber={props.onNumber || defaultOnNumber}
+        onString={props.onString || defaultOnString}
+        onUndefined={props.onUndefined || defaultOnUndefined}
+        path={[]}
+        selectionState={selectionState}
+        setSelectionState={setSelectionState}
+        value={props.value}
+        valueKey={props.valueKey || ""}
+      />
+      <Button
+        m={3}
+        onClick={() => props.onSubmit ? props.onSubmit(selectionState) : defaultSubmit(selectionState)}
+      >
+        GET SELECTED
+      </Button>
+    </>
   )
 }
 
@@ -39,7 +49,7 @@ const CollapseObjectParser: React.FunctionComponent<TCollapseObjectParser> = (pr
     onUndefined,
     value,
   } = props
-
+  const newPath = [...props.path].filter((isVal) => isVal || isVal === 0)
    switch (typeof(value)) {
     case 'object':
       if(Array.isArray(value)) {
@@ -49,7 +59,7 @@ const CollapseObjectParser: React.FunctionComponent<TCollapseObjectParser> = (pr
             onCollapse={() => {
               setCollapseState({
               ...collapseState,
-              [props.path.join('.')]: !isCollapsed
+              [newPath.join('.')]: !isCollapsed
               })
             }}
             title={String(props.valueKey)}
@@ -62,7 +72,7 @@ const CollapseObjectParser: React.FunctionComponent<TCollapseObjectParser> = (pr
                     { ...props }
                     value={arrItem}
                     valueKey={index}
-                    path={[...props.path, String(props.valueKey)]}
+                    path={[...newPath, String(props.valueKey)]}
                   />
                 )
               )
@@ -76,10 +86,10 @@ const CollapseObjectParser: React.FunctionComponent<TCollapseObjectParser> = (pr
             onCollapse={() => {
               setCollapseState({
                 ...collapseState,
-                [props.path.join('.')]: !isCollapsed
+                [newPath.join('.')]: !isCollapsed
               })
             }}
-            title={`${props.valueKey}: {${Object.keys(props.value).join(', ')}}`}
+            title={`${props.valueKey ? props.valueKey : '{}'}: {${Object.keys(props.value).join(', ')}}`}
           >
             {
               Object.entries(props.value).map(
@@ -89,7 +99,7 @@ const CollapseObjectParser: React.FunctionComponent<TCollapseObjectParser> = (pr
                     { ...props }
                     value={value}
                     valueKey={key}
-                    path={[...props.path, String(props.valueKey)]}
+                    path={[...newPath, String(props.valueKey)]}
                   />
                 )
               )

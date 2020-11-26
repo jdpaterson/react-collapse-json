@@ -17,6 +17,7 @@ const Paragraph: React.FunctionComponent<TParagraph> = styled.p<TParagraph>`
   ${position}
   ${space}
   ${typography}
+  margin: 0;
 `
 
 export default Paragraph
