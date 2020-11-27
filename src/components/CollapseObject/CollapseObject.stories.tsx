@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Meta } from '@storybook/react/types-6-0';
+import { Box } from '~/components'
 import CollapseObject from '~/components/CollapseObject'
 
 const object = {
@@ -33,11 +34,19 @@ const object = {
     undefined
   ],
 }
-export const Primary = () => (
-  <CollapseObject
-    value={object}
-  />
-)
+export const Primary = () => {
+  const [finalState, setFinalState] = useState(JSON.stringify({}))
+  return (
+    <Box display="flex" flexDirection="column">
+      <CollapseObject
+        onSubmit={(val) => setFinalState(JSON.stringify(val))}
+        value={object}
+      />
+      <code>
+        {finalState}
+      </code>
+    </Box>
+)}
 
 export default {
   title: 'Components/Button',
